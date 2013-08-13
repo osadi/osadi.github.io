@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Kittens!</title>
+  <style>
+  </style>
+</head>
+
+<body class="cf">
+    <div id="kittens">
+      <h1>Kittens!</h1>
+      <a href="kitten.html"><img src="http://placekitten.com/200/200" alt="A heartbreakingly cute kitten!" class="photo"></a>
+      <a href="kitten.html"><img src="http://placekitten.com/300/200" alt="A heartbreakingly cute kitten!" class="photo"></a>
+      <a href="kitten.html"><img src="http://placekitten.com/400/200" alt="A heartbreakingly cute kitten!" class="photo"></a>
+    </div>
+    <div id="kitten">
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+    $('.photo').on('click', function(event){
+        console.log('click');
+        event.preventDefault();
+        $('#kitten').load('kitten.html #container');
+        $('#kittens').toggle();
+        history.pushState({page:'image'}, event.target.textContent, event.target.parentNode.href);
+    });
+    
+    // Revert to a previous state
+    window.addEventListener('popstate', function(event) {
+        console.log(event.state);
+        if(event.state != null && event.state.page == 'list') {
+            $('#kitten').empty();
+            $('#kittens').toggle();
+        }
+    });
+
+    // Store the initial page
+    history.replaceState({page:'list'}, document.title, document.location.href);
+  </script>
+</body>
+
+</html>
